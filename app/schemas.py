@@ -29,13 +29,14 @@ class VoiceDetectionRequest(BaseModel):
         except Exception:
             raise ValueError("Invalid base64 encoding")
     
-    class Config:
-        schema_extra = {
+    model_config = {
+        "json_schema_extra": {
             "example": {
                 "audio_base64": "SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA...",
                 "language": "Tamil"
             }
         }
+    }
 
 
 class VoiceDetectionResponse(BaseModel):
@@ -64,8 +65,8 @@ class VoiceDetectionResponse(BaseModel):
         description="Human-readable explanation of the classification"
     )
     
-    class Config:
-        schema_extra = {
+    model_config = {
+        "json_schema_extra": {
             "example": {
                 "status": "success",
                 "language": "Tamil",
@@ -74,6 +75,7 @@ class VoiceDetectionResponse(BaseModel):
                 "explanation": "Unnatural pitch consistency detected with minimal spectral variations"
             }
         }
+    }
 
 
 class ErrorResponse(BaseModel):
@@ -83,14 +85,15 @@ class ErrorResponse(BaseModel):
     error: str = Field(..., description="Error message")
     detail: str = Field(None, description="Detailed error information")
     
-    class Config:
-        schema_extra = {
+    model_config = {
+        "json_schema_extra": {
             "example": {
                 "status": "error",
                 "error": "Invalid audio format",
                 "detail": "Audio file must be in MP3 format"
             }
         }
+    }
 
 
 class HealthResponse(BaseModel):
@@ -98,4 +101,8 @@ class HealthResponse(BaseModel):
     
     status: str = "healthy"
     version: str = "1.0.0"
-    model_loaded: bool = True
+    is_model_loaded: bool = Field(True, alias="model_loaded")
+    
+    model_config = {
+        "protected_namespaces": ()
+    }
