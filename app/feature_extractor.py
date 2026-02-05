@@ -5,6 +5,12 @@ import numpy as np
 import librosa
 from app.config import config
 from app.utils import logger
+import scipy.signal
+
+# Monkeypatch for scipy >= 1.9.0 compatibility
+if not hasattr(scipy.signal, 'hann'):
+    logger.info("Monkeypatching scipy.signal.hann for compatibility")
+    scipy.signal.hann = scipy.signal.windows.hann
 
 
 class FeatureExtractor:
