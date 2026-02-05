@@ -11,7 +11,8 @@ class VoiceDetectionRequest(BaseModel):
     audio_base64: str = Field(
         ...,
         description="Base64-encoded MP3 audio file",
-        min_length=100
+        min_length=100,
+        alias="audioBase64"
     )
     language: Literal["Tamil", "English", "Hindi", "Malayalam", "Telugu"] = Field(
         ...,
@@ -30,6 +31,7 @@ class VoiceDetectionRequest(BaseModel):
             raise ValueError("Invalid base64 encoding")
     
     model_config = {
+        "populate_by_name": True,
         "json_schema_extra": {
             "example": {
                 "audio_base64": "SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA...",
