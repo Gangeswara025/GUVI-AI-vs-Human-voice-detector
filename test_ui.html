@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Voice Detection - HCL-GUVI Hackathon 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         * {
@@ -53,7 +55,7 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
@@ -84,13 +86,18 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             animation: rotate 20s linear infinite;
         }
 
         @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .header-content {
@@ -335,8 +342,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Result Section */
@@ -367,6 +379,7 @@
                 opacity: 0;
                 transform: translateY(-15px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -588,6 +601,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -613,7 +627,8 @@
 
             <div class="form-group">
                 <label for="apiUrl">API URL</label>
-                <input type="text" id="apiUrl" value="http://127.0.0.1:8000/api/v1/detect" placeholder="http://127.0.0.1:8000/api/v1/detect">
+                <input type="text" id="apiUrl" value="/api/v1/detect"
+                    placeholder="https://your-app.onrender.com/api/v1/detect">
             </div>
 
             <div class="form-group">
@@ -624,7 +639,7 @@
 
         <div class="card">
             <h2><span class="icon">🎵</span> Audio Input</h2>
-            
+
             <div class="form-group">
                 <label>Upload MP3 File</label>
                 <div class="file-upload-wrapper">
@@ -663,7 +678,8 @@
 
             <div class="loading" id="loading">
                 <div class="spinner"></div>
-                <p style="color: var(--text-secondary); font-weight: 600;">🔬 Analyzing audio features... Please wait</p>
+                <p style="color: var(--text-secondary); font-weight: 600;">🔬 Analyzing audio features... Please wait
+                </p>
             </div>
 
             <div class="result" id="result"></div>
@@ -679,6 +695,17 @@
     </div>
 
     <script>
+        // Auto-configure API URL
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiPath = '/api/v1/detect';
+            // If served from file, keep default localhost
+            if (window.location.protocol !== 'file:') {
+                const fullUrl = window.location.origin + apiPath;
+                document.getElementById('apiUrl').value = fullUrl;
+                document.getElementById('apiEndpoint').textContent = fullUrl;
+            }
+        });
+
         // File upload handling
         const fileInput = document.getElementById('audioFile');
         const fileName = document.getElementById('fileName');
@@ -703,7 +730,7 @@
 
         // Drag and drop
         const uploadBtn = document.querySelector('.file-upload-btn');
-        
+
         uploadBtn.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadBtn.style.borderColor = 'var(--success)';
@@ -838,7 +865,7 @@
                 const circumference = 440;
                 const offset = circumference - (confidencePercent / 100) * circumference;
                 circle.style.strokeDashoffset = offset;
-                
+
                 // Color based on confidence
                 if (confidencePercent >= 80) {
                     circle.style.stroke = 'var(--success)';
@@ -975,4 +1002,5 @@
         });
     </script>
 </body>
+
 </html>
